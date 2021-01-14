@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'wishlist.apps.WishlistConfig',
+    'phonenumber_field',
 ]
 
 MIDDLEWARE = [
