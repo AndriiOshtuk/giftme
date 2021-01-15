@@ -1,23 +1,29 @@
+import datetime
+
 from django.db import models
-
-
 from phonenumber_field.modelfields import PhoneNumberField
 
 
 class User(models.Model):
     first_name = models.CharField(max_length = 50)
     last_name = models.CharField(max_length = 50, blank=True)
-    phone_number = PhoneNumberField(help_text='Phone number')
+    phone_number = PhoneNumberField(null=False, blank=False, 
+        unique=True, help_text='Phone number')
 
-    # TODO Add __str__()
+    def __str__(self):
+        return f'User:{self.first_name}:{self.phone_number}'
 
 
 class WishList(models.Model):
     name = models.CharField(max_length = 50)
     due_date = models.DateField(blank=True, null=True)
-    user = models.ForeignKey('Gift', on_delete=models.CASCADE)
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
 
-    # TODO Add __str__()
+    def __str__(self):
+        return f'Wishlist:{self.name} for {self.user.name}'
+
+    def is_due(self):
+        return self.due_date < datetime.date.today()
 
 
 class Gift(models.Model):
@@ -29,4 +35,5 @@ class Gift(models.Model):
     wish_list = models.ForeignKey('WishList', on_delete=models.CASCADE)
     user = models.ForeignKey('User', on_delete=models.SET_DEFAULT, default=None)
 
-    # TODO Add __str__()      
+    def __str__(self):
+        return f'Gift:{self.name} in {self.wish_list}'      
