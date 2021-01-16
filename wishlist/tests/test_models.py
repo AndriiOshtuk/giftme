@@ -1,9 +1,11 @@
 import datetime
 
 from django.test import TestCase
+from django.db import IntegrityError
 
 from wishlist.models import User, WishList, Gift
 
+# TODO Refactor all classes to DRY principle
 
 class UserModelTests(TestCase):
 
@@ -94,3 +96,38 @@ class WishListModelTests(TestCase):
         date = datetime.date.today() + datetime.timedelta(days=1)
         wishlist = WishList(name='Wishlist with due date', due_date=date)
         self.assertIs(wishlist.is_due(), False)
+
+
+class GiftModelTests(TestCase):
+
+    def setUp(self):
+        self.user1 = User.objects.create(first_name='John', last_name='Smith', phone_number='+41524204242')
+        date = datetime.date(2030, 12, 31)
+        self.wishlist1 = WishList.objects.create(name='Gifts for NY', due_date=date, user=self.user1)
+        self.gift1 = Gift.objects.create(name='Gift 1', wish_list=self.wishlist1, user=self.user1)
+
+    def test_remove_wishlist_removes_gift(self):
+        wishlist = WishList.objects.get(id=1)
+        wishlist.delete()
+        gifts = Gift.objects.count()
+        self.assertEquals(gifts, 0)
+
+    def test_remove_user_removes_gift(self):
+        user = User.objects.get(id=1)
+        user.delete()
+        gifts = Gift.objects.count()
+        self.assertEquals(gifts, 0)
+
+
+    def test_name_max_length(self):
+        gift = Gift.objects.get(id=1)
+        max_length = gift._meta.get_field('name').max_length
+        self.assertEquals(max_length, 50)
+
+    def test_price_positive_ok(self):
+        gift = Gift.objects.create(name='Gift 1', price=5, wish_list=self.wishlist1, user=self.user1)
+        self.assertEquals(gift.price, 5)
+
+    def test_price_error_on_negative(self):
+        with self.assertRaises(IntegrityError):
+            Gift.objects.create(name='Gift 1', price=-5, wish_list=self.wishlist1, user=self.user1)
