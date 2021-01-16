@@ -5,14 +5,14 @@ from django.db import IntegrityError
 
 from wishlist.models import User, WishList, Gift
 
-# TODO Refactor all classes to DRY principle
 
 class UserModelTests(TestCase):
 
-    def test_create_simple_user(self):
-        User.objects.create(first_name='John', last_name='Smith', phone_number='+41524204242')
+    def create_user(self, first_name, last_name, phone_number):
+        return User.objects.create(first_name=first_name, last_name=last_name, phone_number=phone_number)
 
-        test_user = User.objects.get(id=1)
+    def test_create_simple_user(self):
+        test_user = self.create_user(first_name='John', last_name='Smith', phone_number='+41524204242')
 
         self.assertEquals(test_user.first_name, 'John')
         self.assertEquals(test_user.last_name, 'Smith')
@@ -28,31 +28,23 @@ class UserModelTests(TestCase):
         self.assertEquals(test_user.phone_number, '+41524204242')
 
     def test_create_user_empty_last_name(self):
-        User.objects.create(first_name='John', last_name='', phone_number='+41524204242')
-
-        test_user = User.objects.get(id=1)
+        test_user = self.create_user(first_name='John', last_name='', phone_number='+41524204242')
 
         self.assertEquals(test_user.first_name, 'John')
         self.assertEquals(test_user.last_name, '')
         self.assertEquals(test_user.phone_number, '+41524204242')
 
-    def test_create_empty_phone_number(self):
-        # TODO Implement
-        pass
-
-    def test_create_not_valid_phone_number(self):
-        # TODO Implement
-        pass
+    def test_create_none_phone_number(self):
+        with self.assertRaises(IntegrityError):
+            test_user = self.create_user(first_name='John', last_name='', phone_number=None)
 
     def test_first_name_max_length(self):
-        User.objects.create(first_name='John', last_name='Smith', phone_number='+41524204242')
-        test_user = User.objects.get(id=1)
+        test_user = self.create_user(first_name='John', last_name='Smith', phone_number='+41524204242')
         max_length = test_user._meta.get_field('first_name').max_length
         self.assertEquals(max_length, 50)
 
     def test_last_name_max_length(self):
-        User.objects.create(first_name='John', last_name='Smith', phone_number='+41524204242')
-        test_user = User.objects.get(id=1)
+        test_user = self.create_user(first_name='John', last_name='Smith', phone_number='+41524204242')
         max_length = test_user._meta.get_field('last_name').max_length
         self.assertEquals(max_length, 50)
 
@@ -78,8 +70,8 @@ class WishListModelTests(TestCase):
         self.assertEquals(wishlists, 2)
 
     def test_last_name_max_length(self):
-        wishlist= WishList.objects.get(id=1)
-        max_length =wishlist._meta.get_field('name').max_length
+        wishlist = WishList.objects.get(id=1)
+        max_length = wishlist._meta.get_field('name').max_length
         self.assertEquals(max_length, 50)
 
     def test_is_due_passed_date(self):
