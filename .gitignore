@@ -137,3 +137,6 @@ dmypy.json
 # Sublime Text stuff
 *.sublime-workspace
 *.sublime-project
+
+# Media files
+/media
