@@ -1,1 +1,15 @@
-{{user_list}}
+<h1>Giftme</h1>
+<p>Welcome text</p>
+<p>Users choosing app: {{ user_list.count }}</p>
+
+
+<h4>Users:</h4>
+{% for user in user_list %}
+    <!-- <p>*{{ user.first_name }} tel: {{ user.phone_number }}</p> -->
+
+    <p><a href="{% url 'wishlist:user-detail' user.id %}">*{{ user.first_name }} tel: {{ user.phone_number }}</a></p>
+
+    {% for item in user.wishlist_set.all %}
+        <a href="{% url 'wishlist:wishlist-detail' item.id %}">{{ item.name }}</a>
+    {% endfor %}
+{% endfor %}
