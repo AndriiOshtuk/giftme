@@ -21,7 +21,8 @@ class WishList(models.Model):
     user = models.ForeignKey("User", on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return f"Wishlist:{self.name} for {self.user.first_name}"
+        # return f"Wishlist:{self.name} for {self.user.first_name}"
+        return f"Wishlist:{self.name}"
 
     def is_due(self):
         return self.due_date < datetime.date.today()
@@ -37,7 +38,7 @@ class Gift(models.Model):
     photo = models.ImageField(blank=True, null=True, upload_to="gifts_images")
     wish_list = models.ForeignKey("WishList", on_delete=models.CASCADE, null=True)
     user = models.ForeignKey(
-        "User", on_delete=models.SET_DEFAULT, default=None, null=True
+        "User", on_delete=models.SET_DEFAULT, default=None, null=True, blank=True
     )
 
     def __str__(self):
