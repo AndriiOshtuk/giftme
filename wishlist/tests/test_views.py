@@ -51,7 +51,7 @@ class GiftDetailViewTest(TestCase):
         self.assertEqual(response.context['gift'].user.phone_number, "+41524204242")
 
 
-class GiftDetailViewTest(TestCase):
+class WishListDetailViewTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         user1 = User.objects.create(
@@ -98,11 +98,8 @@ class GiftDetailViewTest(TestCase):
         response = self.client.get("/wishlist/1")
         self.assertEqual(response.status_code, 200)
 
-        print(response)
-
         for index in range(5):
-            self.assertIn(f"Gift {index}", response)
-            self.assertIn(f"/wishlist/gift/{index+1}", response)
+            self.assertContains(response, f'<a href="/wishlist/gift/{index+1}">Gift {index}</a>')
 
-        self.assertNotIn("Gift 5", response)
-        self.assertNotIn("/wishlist/gift/6", response)
+        self.assertNotContains(response, f"Gift 5")
+        self.assertNotContains(response, f"/wishlist/gift/6")
