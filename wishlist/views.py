@@ -12,6 +12,10 @@ class UserListView(generic.ListView):
     model = User
 
 
+class UserDetailView(generic.DetailView):
+    model = User
+
+
 class WishListDetailView(generic.DetailView):
     model = WishList
 

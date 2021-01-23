@@ -1,0 +1,9 @@
+<h1>{{ object.first_name }} {{ object.last_name }}</h1>
+<p>Telephone: {{ object.phone_number }}</p>
+
+
+<h4>Wishlists:</h4>
+{% for item in object.wishlist_set.all %}
+    <!-- <p> - {{ item.name }}</p> -->
+    <a href="{% url 'wishlist:gift-detail' item.id %}">{{ item.name }}</a>
+{% endfor %}
