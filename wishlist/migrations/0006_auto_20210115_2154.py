@@ -7,23 +7,36 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wishlist', '0005_auto_20210115_1134'),
+        ("wishlist", "0005_auto_20210115_1134"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='gift',
-            name='user',
-            field=models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.SET_DEFAULT, to='wishlist.user'),
+            model_name="gift",
+            name="user",
+            field=models.ForeignKey(
+                default=None,
+                null=True,
+                on_delete=django.db.models.deletion.SET_DEFAULT,
+                to="wishlist.user",
+            ),
         ),
         migrations.AlterField(
-            model_name='gift',
-            name='wish_list',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='wishlist.wishlist'),
+            model_name="gift",
+            name="wish_list",
+            field=models.ForeignKey(
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="wishlist.wishlist",
+            ),
         ),
         migrations.AlterField(
-            model_name='wishlist',
-            name='user',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='wishlist.user'),
+            model_name="wishlist",
+            name="user",
+            field=models.ForeignKey(
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="wishlist.user",
+            ),
         ),
     ]

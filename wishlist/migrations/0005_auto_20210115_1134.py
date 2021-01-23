@@ -7,13 +7,15 @@ import phonenumber_field.modelfields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wishlist', '0004_auto_20210115_1130'),
+        ("wishlist", "0004_auto_20210115_1130"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='user',
-            name='phone_number',
-            field=phonenumber_field.modelfields.PhoneNumberField(help_text='Phone number', max_length=128, region=None, unique=True),
+            model_name="user",
+            name="phone_number",
+            field=phonenumber_field.modelfields.PhoneNumberField(
+                help_text="Phone number", max_length=128, region=None, unique=True
+            ),
         ),
     ]

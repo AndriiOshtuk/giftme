@@ -7,34 +7,67 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wishlist', '0001_initial'),
+        ("wishlist", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Gift',
+            name="Gift",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=50)),
-                ('description', models.TextField(help_text='Gift description, details, etc.')),
-                ('price', models.PositiveIntegerField()),
-                ('url', models.URLField()),
-                ('photo', models.ImageField(upload_to='gifts_images')),
-                ('user', models.ForeignKey(default=None, on_delete=django.db.models.deletion.SET_DEFAULT, to='wishlist.user')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=50)),
+                (
+                    "description",
+                    models.TextField(help_text="Gift description, details, etc."),
+                ),
+                ("price", models.PositiveIntegerField()),
+                ("url", models.URLField()),
+                ("photo", models.ImageField(upload_to="gifts_images")),
+                (
+                    "user",
+                    models.ForeignKey(
+                        default=None,
+                        on_delete=django.db.models.deletion.SET_DEFAULT,
+                        to="wishlist.user",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='WishList',
+            name="WishList",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=50)),
-                ('due_date', models.DateField(blank=True, null=True)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='wishlist.gift')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=50)),
+                ("due_date", models.DateField(blank=True, null=True)),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="wishlist.gift"
+                    ),
+                ),
             ],
         ),
         migrations.AddField(
-            model_name='gift',
-            name='wish_list',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='wishlist.wishlist'),
+            model_name="gift",
+            name="wish_list",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="wishlist.wishlist"
+            ),
         ),
     ]
