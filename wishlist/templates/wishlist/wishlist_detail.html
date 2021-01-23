@@ -1,0 +1,13 @@
+<h1>{{ object.name }}</h1>
+<p>{{ object.due_date }}</p>
+<p>User: {{ object.user }}</p>
+
+
+<h4>Gifts:</h4>
+{% for item in object.gift_set.all %}
+    <!-- <p> - {{ item.name }}</p> -->
+    <a href="{% url 'wishlist:gift-detail' item.id %}">{{ item.name }}</a>
+{% endfor %}
+
+
+
