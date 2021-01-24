@@ -1,15 +1,30 @@
-<h1>Giftme</h1>
-<p>Welcome text</p>
-<p>Users choosing app: {{ user_list.count }}</p>
+{% extends "base.html" %}
+
+{% block title %}<title>Giftme - User's List</title>{% endblock %}
+
+{% block content%}
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h1 class="mt-5">Giftme</h1>
+        <p class="lead">Having a hard times choosing a gift for friends? Ever received useless presents you throw away the next day? Make a list of wishes, share link with friends and wait for a gift you really crave.</p>
+        <p class="lead"><p>Users choosing app: {{ user_list.count }}</p></p>
+        <h1 class="mt-5">Users:</h1>
+        <ul class="list-unstyled">
+            {% for user in user_list %}
+                <li><p><a href="{% url 'wishlist:user-detail' user.id %}">*{{ user.first_name }} tel: {{ user.phone_number }}</a></p></li>
+
+                <ul class="list-unstyled">
+                {% for item in user.wishlist_set.all %}
+                    <li><a href="{% url 'wishlist:wishlist-detail' item.id %}">{{ item.name }}</a></li>
+                {% endfor %}
+                </ul>
+            {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+{%endblock%}
 
 
-<h4>Users:</h4>
-{% for user in user_list %}
-    <!-- <p>*{{ user.first_name }} tel: {{ user.phone_number }}</p> -->
-
-    <p><a href="{% url 'wishlist:user-detail' user.id %}">*{{ user.first_name }} tel: {{ user.phone_number }}</a></p>
-
-    {% for item in user.wishlist_set.all %}
-        <a href="{% url 'wishlist:wishlist-detail' item.id %}">{{ item.name }}</a>
-    {% endfor %}
-{% endfor %}
