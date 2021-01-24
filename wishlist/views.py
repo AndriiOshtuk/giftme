@@ -26,3 +26,7 @@ class GiftDetailView(generic.DetailView):
 
 def bootstrap(request):
     return render(request, 'base.html', {})
+
+
+def about(request):
+    return render(request, 'wishlist/about.html', {})
