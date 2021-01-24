@@ -22,3 +22,7 @@ class WishListDetailView(generic.DetailView):
 
 class GiftDetailView(generic.DetailView):
     model = Gift
+
+
+def bootstrap(request):
+    return render(request, 'index.html', {})
