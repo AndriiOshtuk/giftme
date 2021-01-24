@@ -25,4 +25,4 @@ class GiftDetailView(generic.DetailView):
 
 
 def bootstrap(request):
-    return render(request, 'index.html', {})
+    return render(request, 'base.html', {})
