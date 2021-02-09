@@ -33,15 +33,19 @@
               <span class="sr-only">(current)</span>
             </a>
           </li>
-<!--           <li class="nav-item">
-            <a class="nav-link" href="#">Services</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Contact</a>
-          </li> -->
           <li class="nav-item">
             <a class="nav-link" href="{% url 'wishlist:about-page'%}">About</a>
           </li>
+          {% if user.is_authenticated %}
+          <li class="nav-item">User: {{ user.get_username }}</li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout'%}?next={{request.path}}">Logout</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login'%}?next={{request.path}}">Login</a>
+          </li>
+          {% endif %}
         </ul>
       </div>
     </div>
@@ -80,8 +84,8 @@
   <div class="footer">
   </div> -->
 
+<!-- Copyright -->
 <footer class="bg-light text-center text-lg-start">
-  <!-- Copyright -->
   <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
     <div class="row">
       <div class="col">© 2021</div>
@@ -90,8 +94,8 @@
       <div class="col"><a href="#">↑ Top</a></div>
     </div>
   </div>
-  <!-- Copyright -->
 </footer>
+<!-- Copyright -->
 
 </body>
 
