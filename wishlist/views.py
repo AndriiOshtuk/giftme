@@ -15,6 +15,8 @@ class UserListView(generic.ListView):
 class UserDetailView(generic.DetailView):
     model = User
 
+    # TODO Add get_queryset method in order to restrict our query to just objects for the current user
+
 
 class WishListDetailView(generic.DetailView):
     model = WishList
