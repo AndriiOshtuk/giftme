@@ -126,3 +126,10 @@ STATICFILES_DIRS = [ BASE_DIR / 'static' ]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+
+# TODO Make login to redirect to profile or the same page
+# Redirect to home URL after login (Default redirects to /accounts/profile/)
+LOGIN_REDIRECT_URL = '/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
