@@ -12,7 +12,11 @@
         <h1 class="mt-5">Users:</h1>
         <ul class="list-unstyled">
             {% for user in user_list %}
-                <li><p><a href="{% url 'wishlist:user-detail' user.id %}">*{{ user.first_name }} tel: {{ user.phone_number }}</a></p></li>
+                {% if user.first_name and user.last_name %}
+                    <li><p><a href="{% url 'wishlist:user-detail' user.id %}"> *{{ user.first_name }} {{ user.last_name}}</a></p></li>
+                {% else %}
+                    <li><p><a href="{% url 'wishlist:user-detail' user.id %}"> *{{ user.username }}</a></p></li>
+                {% endif %}
 
                 <ul class="list-unstyled">
                 {% for item in user.wishlist_set.all %}
