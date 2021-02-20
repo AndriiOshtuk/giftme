@@ -1,9 +1,31 @@
-<h1>{{ object.first_name }} {{ object.last_name }}</h1>
-<p>Telephone: {{ object.phone_number }}</p>
+{% extends "base.html" %}
 
+{% block title %}<title>Giftme - {{ object.username }}</title>{% endblock %}
 
-<h4>Wishlists:</h4>
-{% for item in object.wishlist_set.all %}
-    <!-- <p> - {{ item.name }}</p> -->
-    <a href="{% url 'wishlist:gift-detail' item.id %}">{{ item.name }}</a>
-{% endfor %}
+{% block content%}
+  <div class="container my-4">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <i class="fas fa-user-circle text-muted fa-10x"></i>
+        <h1 class="mt-5">User: {{ object.username }}</h1>
+
+        <!-- Wishlist list -->
+        <h1 class="mt-5">Wishlists:</h1>
+        <ul class="list-unstyled">
+            {% for item in object.wishlist_set.all %}
+                <li><p><i class="fas fa-gifts text-primary mx-2"></i><a href="{% url 'wishlist:wishlist-detail' item.id %}">
+                  {% if not item.is_due %}
+                    {{ item.name }}
+                  {% else %}
+                    <strike>{{ item.name }}</strike>
+                  {% endif %}
+                </a></p></li>
+            {% endfor %}
+        </ul>
+        <!-- Wishlist list end-->
+        
+      </div>
+    </div>
+  </div>
+
+{%endblock%}

@@ -14,6 +14,7 @@
 
   <!-- Bootstrap core CSS -->
   <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'fa/css/all.min.css' %}" rel="stylesheet">
 
 </head>
 
@@ -22,7 +23,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
     <div class="container">
-      <a class="navbar-brand" href="#">Start Bootstrap</a>
+      <a class="navbar-brand" href="{% url 'wishlist:user-list'%}">Giftme - presents with an ease</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -34,14 +35,22 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Services</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Contact</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="{% url 'wishlist:about-page'%}">About</a>
           </li>
+          <li class="divider"></li>
+          <hr class="dotted">
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'wishlist:user-detail' user.id %}">User: {{ user.get_username }}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout'%}?next={{request.path}}">Logout</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login'%}?next={{request.path}}">Login</a>
+          </li>
+          {% endif %}
         </ul>
       </div>
     </div>
@@ -69,6 +78,29 @@
   <!-- Bootstrap core JavaScript -->
   <script src="{% static 'vendor/jquery/jquery.slim.min.js' %}"></script>
   <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+<!--   {# The Footer #}
+    <div class="footer">
+        <div class="container">
+            <p>Copyright Giftme</p>
+        </div>
+    </div>
+
+  <div class="footer">
+  </div> -->
+
+<!-- Copyright -->
+<footer class="bg-light text-center text-lg-start">
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+    <div class="row">
+      <div class="col">© 2021</div>
+      <div class="col">Developed with ❤️ by <a class="text-primary" href="https://github.com/AndriiOshtuk">Andrii Oshtuk</a>
+      </div>
+      <div class="col"><a href="#">↑ Top</a></div>
+    </div>
+  </div>
+</footer>
+<!-- Copyright -->
 
 </body>
 

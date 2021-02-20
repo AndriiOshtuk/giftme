@@ -1,5 +1,83 @@
-<h1>{{ object.name }}</h1>
-<p>{{ object.description }}</p>
-<p>Price: {{ object.price }}</p>
-<p>Wishlist: {{ object.wish_list }}</p>
-<p>User: {{ object.user }}</p
+{% extends "base.html" %}
+
+{% block title %}<title>Giftme - {{ object.name }}</title>{% endblock %}
+
+{% block content%}
+  <div class="container my-4">
+    <div class="row">
+      <div class="col text-center">
+        <img
+        class="img-responsive"
+         
+        src="https://images.pexels.com/photos/675970/present-still-life-ribbon-blue-675970.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260" class="rounded" alt="Cinque Terre" 
+
+        >
+      </div>
+
+      <div class="col text-center">
+        <h1 class="mt-5"><u>{{ object.name }}</u></h1>
+        <div>&nbsp;</div>
+        <div class="card my-4">
+          <div class="card-body">
+            <p class="lead">
+              Wishlist: 
+              <a href="{% url 'wishlist:wishlist-detail' object.wish_list.id%}">{{ object.wish_list.name }}</a>
+            </p>
+            <p class="lead">
+              Wished by:    
+              <a href="{% url 'wishlist:user-detail' object.wish_list.user.id%}">{{ object.user }}</a>
+            </p>
+            <p class="lead">
+              Due date: {{ object.wish_list.due_date }}
+            </p>
+            <div>&nbsp;</div>
+            <p class="lead">Description:
+              {% if not object.description %}
+                -
+              {% endif %}
+            </p>
+            {% if object.description %}
+            <p class="lead">{{ object.description }} </p>
+            {% endif %}
+            <p class="lead">Price: 
+              {% if object.price %}
+                {{ object.price }}
+              {% else %}
+                -
+              {% endif %}
+            </p>
+            <p class="lead">URL:
+              {% if object.url %}
+                <a href="{{ object.url }}">{{ object.url }}</a>
+              {% else %}
+                -
+              {% endif %}
+            </p>
+               
+          </div> 
+          <div class="card-footer">
+            <p class="lead">
+            <form action="{% url 'wishlist:gift-detail' object.id%}" method="post">
+            {% csrf_token %}
+            <input type="checkbox" id="is_booked" name="is_booked" 
+            {% if object.is_booked %}
+              value = "False" checked
+            {% else %}
+              value = "True"
+            {% endif %}  
+            >
+            <label for="is_booked"> Book?</label><br>
+            <input type="submit" class="btn btn-primary mb-2"
+            {% if object.wish_list.is_due %} disabled {% endif %}
+            value="Submit">
+            </form>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+
+{%endblock%}
