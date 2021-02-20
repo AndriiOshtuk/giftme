@@ -3,20 +3,38 @@
 {% block title %}<title>Giftme - {{ object.name }}</title>{% endblock %}
 
 {% block content%}
-  <div class="container">
+  <div class="container my-4">
     <div class="row">
-      <div class="col-lg-12 text-center">
-        <h1 class="mt-5">{{ object.name }}</h1>
-        <p class="lead">Due date: {{ object.due_date }}</p>
-        <p class="lead">User: {{ object.user }}</p>
+      <!-- Picture column -->
+      <div class="col text-center">
+        <img class="img-responsive"
+        src="https://images.pexels.com/photos/264985/pexels-photo-264985.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=240&w=300" class="rounded" alt="Cinque Terre">
+      </div>
+      <!-- Picture column end-->
+
+      <!-- Text column -->
+      <div class="col text-center">
+        <h1 class="mt-5"><u>{{ object.name }}</u></h1>
+        <div>&nbsp;</div>
+        <p class="lead">
+          User:
+          <a href="{% url 'wishlist:user-detail' object.user.id%}">{{ object.user }}</a>
+        </p>
+        <p class="lead">
+          Due date: {{ object.due_date }}
+        </p>
+
         <h1 class="mt-5">Gifts:</h1>
         <ul class="list-unstyled">
             {% for item in object.gift_set.all %}
-                <li><p><a href="{% url 'wishlist:gift-detail' item.id %}">{{ item.name }}</a></p></li>
+                <li><p><i class="fas fa-gift text-muted mx-2"></i><a href="{% url 'wishlist:gift-detail' item.id %}">{{ item.name }}</a></p></li>
             {% endfor %}
         </ul>
       </div>
+      <!-- Text column end-->
+
     </div>
+    
   </div>
 
 {%endblock%}
