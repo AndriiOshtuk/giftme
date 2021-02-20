@@ -9,8 +9,8 @@ from wishlist.models import WishList, Gift
 
 class WishListModelTests(TestCase):
     def setUp(self):
-        user1 = User.objects.create(username='testuser1', password='1X<ISRUkw+tuK')
-        user2 = User.objects.create(username='testuser2', password='2HJ1vRV0Z&3iD')
+        user1 = User.objects.create(username="testuser1", password="1X<ISRUkw+tuK")
+        user2 = User.objects.create(username="testuser2", password="2HJ1vRV0Z&3iD")
 
         date = datetime.date(2030, 12, 31)
         WishList.objects.create(name="Gifts for NY", due_date=date, user=user1)
@@ -53,7 +53,7 @@ class WishListModelTests(TestCase):
 
 class GiftModelTests(TestCase):
     def setUp(self):
-        self.user1 = User.objects.create(username='testuser1', password='1X<ISRUkw+tuK')
+        self.user1 = User.objects.create(username="testuser1", password="1X<ISRUkw+tuK")
         date = datetime.date(2030, 12, 31)
         self.wishlist1 = WishList.objects.create(
             name="Gifts for NY", due_date=date, user=self.user1

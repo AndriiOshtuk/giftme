@@ -14,6 +14,7 @@
 
   <!-- Bootstrap core CSS -->
   <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'fa/css/all.min.css' %}" rel="stylesheet">
 
 </head>
 
@@ -22,7 +23,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
     <div class="container">
-      <a class="navbar-brand" href="#">Giftme - presents with an ease</a>
+      <a class="navbar-brand" href="{% url 'wishlist:user-list'%}">Giftme - presents with an ease</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -36,8 +37,12 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'wishlist:about-page'%}">About</a>
           </li>
+          <li class="divider"></li>
+          <hr class="dotted">
           {% if user.is_authenticated %}
-          <li class="nav-item">User: {{ user.get_username }}</li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'wishlist:user-detail' user.id %}">User: {{ user.get_username }}</a>
+          </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'logout'%}?next={{request.path}}">Logout</a>
           </li>

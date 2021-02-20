@@ -9,9 +9,7 @@ from wishlist.models import User, WishList, Gift
 class GiftDetailViewTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        user1 = User.objects.create(
-            first_name="John", last_name="Smith", phone_number="+41524204242"
-        )
+        user1 = User.objects.create(username="testuser1", password="1X<ISRUkw+tuK")
         date = datetime.date(2030, 12, 31)
         wishlist1 = WishList.objects.create(
             name="Gifts for NY", due_date=date, user=user1
@@ -49,16 +47,13 @@ class GiftDetailViewTest(TestCase):
         )
         # TODO test gift.photo
         self.assertEqual(response.context["gift"].wish_list.name, "Gifts for NY")
-        self.assertEqual(response.context["gift"].user.first_name, "John")
-        self.assertEqual(response.context["gift"].user.phone_number, "+41524204242")
+        self.assertEqual(response.context["gift"].user.username, "testuser1")
 
 
 class WishListDetailViewTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        user1 = User.objects.create(
-            first_name="John", last_name="Smith", phone_number="+41524204242"
-        )
+        user1 = User.objects.create(username="testuser1", password="1X<ISRUkw+tuK")
         date = datetime.date(2030, 12, 31)
         wishlist1 = WishList.objects.create(
             name="Gifts for NY", due_date=date, user=user1
@@ -95,8 +90,7 @@ class WishListDetailViewTest(TestCase):
         self.assertEqual(
             response.context["wishlist"].due_date, datetime.date(2030, 12, 31)
         )
-        self.assertEqual(response.context["wishlist"].user.first_name, "John")
-        self.assertEqual(response.context["wishlist"].user.phone_number, "+41524204242")
+        self.assertEqual(response.context["wishlist"].user.username, "testuser1")
 
     def test_lists_gifts_for_wishlist(self):
         response = self.client.get("/wishlist/1")

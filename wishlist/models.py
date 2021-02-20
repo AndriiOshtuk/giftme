@@ -26,6 +26,7 @@ class Gift(models.Model):
     url = models.URLField(blank=True, null=True)
     photo = models.ImageField(blank=True, null=True, upload_to="gifts_images")
     wish_list = models.ForeignKey("WishList", on_delete=models.CASCADE, null=True)
+    is_booked = models.BooleanField(default=False, blank=True, null=True)
     user = models.ForeignKey(
         User, on_delete=models.SET_DEFAULT, default=None, null=True, blank=True
     )
