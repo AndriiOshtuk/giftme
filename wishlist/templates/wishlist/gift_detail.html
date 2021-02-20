@@ -59,9 +59,6 @@
             <p class="lead">
             <form action="{% url 'wishlist:gift-detail' object.id%}" method="post">
             {% csrf_token %}
-
-            <!-- <input type="checkbox" id="is_booked" name="is_booked" value = "True"> -->
-
             <input type="checkbox" id="is_booked" name="is_booked" 
             {% if object.is_booked %}
               value = "False" checked
@@ -69,10 +66,10 @@
               value = "True"
             {% endif %}  
             >
-
-            <!-- <input type='hidden' value='False' name='not_booked'> -->
             <label for="is_booked"> Book?</label><br>
-            <input type="submit" class="btn btn-primary mb-2"  value="Submit">
+            <input type="submit" class="btn btn-primary mb-2"
+            {% if object.wish_list.is_due %} disabled {% endif %}
+            value="Submit">
             </form>
             </p>
           </div>
