@@ -13,9 +13,9 @@
         <ul class="list-unstyled">
             {% for user in user_list %}
                 {% if user.first_name and user.last_name %}
-                    <li><p><a href="{% url 'wishlist:user-detail' user.id %}"> *{{ user.first_name }} {{ user.last_name}}</a></p></li>
+                    <li><p><a href="{% url 'wishlist:user-detail' user.id %}"> <i class="fas fa-gifts text-primary"></i>{{ user.first_name }} {{ user.last_name}}</a></p></li>
                 {% else %}
-                    <li><p><a href="{% url 'wishlist:user-detail' user.id %}"> *{{ user.username }}</a></p></li>
+                    <li><p><a href="{% url 'wishlist:user-detail' user.id %}"> <i class="fas fa-gifts text-primary"></i>{{ user.username }}</a></p></li>
                 {% endif %}
 
                 <ul class="list-unstyled">
@@ -23,6 +23,7 @@
                     <li><a href="{% url 'wishlist:wishlist-detail' item.id %}">{{ item.name }}</a></li>
                 {% endfor %}
                 </ul>
+                <div>&nbsp;</div>
             {% endfor %}
         </ul>
       </div>
