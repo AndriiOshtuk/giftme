@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wishlist', '0009_auto_20210209_2050'),
+        ("wishlist", "0009_auto_20210209_2050"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='gift',
-            name='is_booked',
+            model_name="gift",
+            name="is_booked",
             field=models.BooleanField(blank=True, default=False, null=True),
         ),
     ]
