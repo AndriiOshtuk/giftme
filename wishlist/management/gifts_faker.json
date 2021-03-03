@@ -1,0 +1,56 @@
+{
+  "gifts": [
+    {
+      "name" : "Screen Protector",
+      "description" : "Ailun Screen Protector Compatible for iPhone XS, iPhone X, iPhone 11 Pro,3 Pack,5.8 Inch Display Case Friendly Tempered Glass",
+      "url" : "https://www.amazon.com/Protector-Compatible-Tempered-Anti-Scratch-Advanced/dp/B075S8V728/ref=gbps_tit_m-9_475e_d2e1af1c?smid=A11HC9SRN13WHM&pf_rd_p=5d86def2-ec10-4364-9008-8fbccf30475e&pf_rd_s=merchandised-search-9&pf_rd_t=101&pf_rd_i=15529609011&pf_rd_m=ATVPDKIKX0DER&pf_rd_r=FJ6AWJP13J6NQ570NZQ5",
+      "price": 14
+    },
+    {
+      "name" : "UNO",
+      "description" : "UNO is the classic family card game that's easy to learn and so much fun to play In a race to deplete your hand, match one of your cards with the current card shown on top of the deck by either color or number. Strategize to defeat your competition with special action cards like Skips, Reverses, Draw Twos and color-changing Wild cards. When you're down to one card, don't forget to shout 'UNO' This fun family card game is perfect for adults, teens and kids 7 years old and up.UNO Tin comes with 112 cards and instructions in a sturdy tin that's great for storage and travel.Material Type: Plastic",
+      "url" : "https://www.amazon.com/Mattel-Games-Official-Amazon-Exclusive/dp/B07P6MZPK3/ref=sr_1_4?dchild=1&keywords=card+games&pf_rd_i=21439846011&pf_rd_m=ATVPDKIKX0DER&pf_rd_p=a8bcad66-2a7f-405d-b0e0-8b0e94ebfd3d&pf_rd_r=Z2WAJWNSTY9V4G0CXV18&pf_rd_s=merchandised-search-6&pf_rd_t=101&qid=1614799578&sr=8-4",
+      "price": 9
+    },
+    {"name" : "Unstable Unicorns Card Game",
+    "description" : "Unstable Unicorns Card Game - A strategic card game and party game for adults & teens",
+    "url" : "https://www.amazon.com/Unstable-Unicorns-TEE3678UUBSG1-Base-Game/dp/B07BMLQBM1/ref=sr_1_1_sspa?dchild=1&keywords=card+games&pf_rd_i=21439846011&pf_rd_m=ATVPDKIKX0DER&pf_rd_p=a8bcad66-2a7f-405d-b0e0-8b0e94ebfd3d&pf_rd_r=Z2WAJWNSTY9V4G0CXV18&pf_rd_s=merchandised-search-6&pf_rd_t=101&qid=1614799578&sr=8-1-spons&psc=1&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUFWU1RKN0NSSTQxSkMmZW5jcnlwdGVkSWQ9QTAxNzE2MzMzMEhGNjFBOUtMTVVCJmVuY3J5cHRlZEFkSWQ9QTA0OTExNTAzN1NaNTE5WUNQRkoyJndpZGdldE5hbWU9c3BfYXRmJmFjdGlvbj1jbGlja1JlZGlyZWN0JmRvTm90TG9nQ2xpY2s9dHJ1ZQ==",
+    "price": 20
+    },
+    {"name" : "Dumbbells",
+    "description" : "Portzon Set of 2 Neoprene Dumbbell Hand Weights, Anti-Slip, Anti-roll",
+    "url" : "https://www.amazon.com/Portzon-Neoprene-Dumbbell-Anti-Slip-Anti-roll/dp/B089LNBGCN/ref=lp_12378705011_1_1?s=specialty-aps",
+    "price": 13
+    },
+    {"name" : "Python Crash Course",
+    "description" : "Python Crash Course, 2nd Edition: A Hands-On, Project-Based Introduction to Programming Paperback",
+    "url" : "https://www.amazon.com/Python-Crash-Course-2nd-Edition/dp/1593279280/ref=pd_rhf_ee_s_pd_crcd_1?pd_rd_w=H2O34&pf_rd_p=8019ba47-0a12-4976-b76b-5c932d60db6f&pf_rd_r=VT4BPTA0DZX98HMPPW33&pd_rd_r=a1ff196e-d32b-4635-80e6-938c86aa1e40&pd_rd_wg=ykz5T&pd_rd_i=1593279280&psc=1",
+    "price": 22
+    },
+    {"name" : "Outdoor String Lights",
+    "description" : "Vintage Edison LED Weatherproof Outdoor String Lights, 24 feet, Black",
+    "url" : "https://www.amazon.com/Beams-4W-ST58-Bulb-Weatherproof/dp/B07WFQ8Y2Y/ref=sr_1_2_sspa?dchild=1&keywords=string+lights&pf_rd_i=21439846011&pf_rd_m=ATVPDKIKX0DER&pf_rd_p=d108f598-c36c-4aa2-b2be-60da54291f9f&pf_rd_r=Z2WAJWNSTY9V4G0CXV18&pf_rd_s=merchandised-search-18&pf_rd_t=101&qid=1614802344&sr=8-2-spons&psc=1&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUFQVFBVWVNYVlhQNzAmZW5jcnlwdGVkSWQ9QTA4MjQ1MjEyNUVaQUNTUUgyU1Y1JmVuY3J5cHRlZEFkSWQ9QTAzNDM4OTMxU01IN0dMNVc1VUdDJndpZGdldE5hbWU9c3BfYXRmJmFjdGlvbj1jbGlja1JlZGlyZWN0JmRvTm90TG9nQ2xpY2s9dHJ1ZQ==",
+    "price": 40
+    },
+    {"name" : "Smartwatch",
+    "description" : "Fitbit Versa 3 Health & Fitness Smartwatch with GPS, 24/7 Heart Rate, Alexa Built-in, 6+ Days Battery, Black/Black, One Size (S & L Bands Included)",
+    "url" : "https://www.amazon.com/Fitbit-Fitness-Smartwatch-Battery-Included/dp/B08DFPV5Y2/ref=sr_1_1_sspa?dchild=1&keywords=fitness+GPS&pf_rd_i=21439846011&pf_rd_m=ATVPDKIKX0DER&pf_rd_p=67c6cf47-c067-447f-a799-b2cb009a7a6e&pf_rd_r=Z2WAJWNSTY9V4G0CXV18&pf_rd_s=merchandised-search-8&pf_rd_t=101&qid=1614802559&sr=8-1-spons&psc=1&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUEyT0RVUFFJSzJBNU5SJmVuY3J5cHRlZElkPUEwMzIyMDQ2MlZQWjFWV0hEWTBWMyZlbmNyeXB0ZWRBZElkPUEwMzM4NTAwM1ZaTTBUOVIxMkQxOCZ3aWRnZXROYW1lPXNwX2F0ZiZhY3Rpb249Y2xpY2tSZWRpcmVjdCZkb05vdExvZ0NsaWNrPXRydWU=",
+    "price": 229
+    },
+    {"name" : "Samsung Galaxy S20",
+    "description" : "Samsung Galaxy S20 FE 5G | Factory Unlocked Android Cell Phone | 128 GB | US Version Smartphone | Pro-Grade Camera, 30X Space Zoom, Night Mode | Cloud Navy",
+    "url" : "https://www.amazon.com/Samsung-Factory-Unlocked-Smartphone-Pro-Grade/dp/B08FYTSXGQ/ref=sr_1_2?dchild=1&keywords=mobile+phones&pf_rd_i=21439846011&pf_rd_m=ATVPDKIKX0DER&pf_rd_p=67c6cf47-c067-447f-a799-b2cb009a7a6e&pf_rd_r=Z2WAJWNSTY9V4G0CXV18&pf_rd_s=merchandised-search-8&pf_rd_t=101&qid=1614802558&sr=8-2",
+    "price": 600
+    },
+    {"name" : "Sony Headphones",
+    "description" : "Sony WH-1000XM4 Wireless Industry Leading Noise Canceling Overhead Headphones with Mic for Phone-Call and Alexa Voice Control, Black",
+    "url" : "https://www.amazon.com/Sony-WH-1000XM4-Canceling-Headphones-phone-call/dp/B0863TXGM3/ref=sr_1_10?dchild=1&fst=as%3Aoff&pf_rd_i=16225009011&pf_rd_m=ATVPDKIKX0DER&pf_rd_p=ce987da1-b370-4b55-a7c2-b79bf2e3ba39&pf_rd_r=4X8ZH8BAFXR0YQWB5JNQ&pf_rd_s=merchandised-search-6&pf_rd_t=101&qid=1614802787&refinements=p_n_shipping_option-bin%3A3242350011&rnid=493964&s=electronics&sr=1-10",
+    "price": 350
+    },
+    {"name" : "Shaker Bottle",
+    "description" : "BlenderBottle Shaker Bottle Pro Series Perfect for Protein Shakes and Pre Workout, 24-Ounce, Black",
+    "url" : "https://www.amazon.com/BlenderBottle-Shaker-Bottle-24-Ounce-Black/dp/B07C81F48R/ref=sr_1_15?dchild=1&fst=as%3Aoff&pf_rd_i=16225014011&pf_rd_m=ATVPDKIKX0DER&pf_rd_p=a3460e00-9eac-4cab-9814-093998a3f6d8&pf_rd_r=687KSGG53T24X507BFMZ&pf_rd_s=merchandised-search-4&pf_rd_t=101&qid=1614802849&rnid=706814011&s=sporting-goods&sr=1-15",
+    "price": 11
+    }
+    ] 
+}
