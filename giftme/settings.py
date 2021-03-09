@@ -149,5 +149,41 @@ EMAIL_USE_TLS = True
 
 DEFAULT_FROM_EMAIL = 'dev.andrii.oshtuk@gmail.com'
 
+LOGGING = {
+    'version': 1,
+    # Version of logging
+    'disable_existing_loggers': False,
+    'formatters': {
+        'console': {
+            'format': '%(name)-12s %(levelname)-8s %(message)s',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'console',
+        },
+        # Add Handler for Sentry for `warning` and above
+        # 'sentry': {
+        #     'level': 'INFO',
+        #     'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
+        # },
+    },
+    # Loggers ####################################################################
+    'loggers': {
+        '': {
+            'level': 'DEBUG',
+            # 'handlers': ['console', 'sentry'],
+            'handlers': ['console', ],
+        },
+        'wishlist': {
+            'level': 'DEBUG',
+            # 'handlers': ['console', 'sentry', ],
+            'handlers': ['console', ],
+            # required to avoid double logging with root logger
+            'propagate': False,
+        },
+    },
+}
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
