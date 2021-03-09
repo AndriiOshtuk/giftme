@@ -183,6 +183,13 @@ LOGGING = {
             # required to avoid double logging with root logger
             'propagate': False,
         },
+        'django': {
+            'level': 'DEBUG',
+            # 'handlers': ['console', 'sentry', ],
+            'handlers': ['console', ],
+            # required to avoid double logging with root logger
+            'propagate': False,
+        },
     },
 }
 
