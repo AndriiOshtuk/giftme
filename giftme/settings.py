@@ -16,7 +16,6 @@ import environ
 import dj_database_url
 
 
-
 env = environ.Env(DEBUG=(bool, False))  # set default values and casting
 environ.Env.read_env()                   # reading .env file
 
@@ -30,7 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env('GIFTME_SECRET_KEY', cast=str, default='s3cr3t')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG', cast=bool, default=False)
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -45,7 +44,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'wishlist.apps.WishlistConfig',
-    'phonenumber_field',
 ]
 
 MIDDLEWARE = [
@@ -156,3 +154,49 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 DEFAULT_FROM_EMAIL = 'dev.andrii.oshtuk@gmail.com'
+
+LOGGING = {
+    'version': 1,
+    # Version of logging
+    'disable_existing_loggers': False,
+    'formatters': {
+        'console': {
+            'format': '%(name)-12s %(levelname)-8s %(message)s',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'console',
+        },
+        # Add Handler for Sentry for `warning` and above
+        # 'sentry': {
+        #     'level': 'INFO',
+        #     'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
+        # },
+    },
+    # Loggers ####################################################################
+    'loggers': {
+        '': {
+            'level': 'DEBUG',
+            # 'handlers': ['console', 'sentry'],
+            'handlers': ['console', ],
+        },
+        'wishlist': {
+            'level': 'DEBUG',
+            # 'handlers': ['console', 'sentry', ],
+            'handlers': ['console', ],
+            # required to avoid double logging with root logger
+            'propagate': False,
+        },
+        'django': {
+            'level': 'DEBUG',
+            # 'handlers': ['console', 'sentry', ],
+            'handlers': ['console', ],
+            # required to avoid double logging with root logger
+            'propagate': False,
+        },
+    },
+}
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
