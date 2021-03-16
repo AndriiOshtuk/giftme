@@ -157,7 +157,6 @@ DEFAULT_FROM_EMAIL = 'dev.andrii.oshtuk@gmail.com'
 
 LOGGING = {
     'version': 1,
-    # Version of logging
     'disable_existing_loggers': False,
     'formatters': {
         'console': {
@@ -169,7 +168,6 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'console',
         },
-        # Add Handler for Sentry for `warning` and above
         # 'sentry': {
         #     'level': 'INFO',
         #     'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
@@ -178,19 +176,12 @@ LOGGING = {
     # Loggers ####################################################################
     'loggers': {
         '': {
-            'level': 'DEBUG',
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
             # 'handlers': ['console', 'sentry'],
             'handlers': ['console', ],
         },
-        'wishlist': {
-            'level': 'DEBUG',
-            # 'handlers': ['console', 'sentry', ],
-            'handlers': ['console', ],
-            # required to avoid double logging with root logger
-            'propagate': False,
-        },
         'django': {
-            'level': 'DEBUG',
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
             # 'handlers': ['console', 'sentry', ],
             'handlers': ['console', ],
             # required to avoid double logging with root logger
