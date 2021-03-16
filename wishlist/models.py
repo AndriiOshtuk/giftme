@@ -22,7 +22,7 @@ class Gift(models.Model):
         blank=True, help_text="Gift description, details, etc."
     )
     price = models.PositiveIntegerField(blank=True, null=True)
-    url = models.URLField(blank=True, null=True)
+    url = models.URLField(max_length=1000, blank=True, null=True)
     photo = models.ImageField(blank=True, null=True, upload_to="gifts_images")
     wish_list = models.ForeignKey("WishList", on_delete=models.CASCADE, null=True)
     is_booked = models.BooleanField(default=False, blank=True, null=True)
