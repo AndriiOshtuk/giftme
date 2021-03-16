@@ -23,10 +23,14 @@
               Wishlist: 
               <a href="{% url 'wishlist:wishlist-detail' object.wish_list.id%}">{{ object.wish_list.name }}</a>
             </p>
-            <p class="lead">
-              Wished by:    
-              <a href="{% url 'wishlist:user-detail' object.wish_list.user.id%}">{{ object.user }}</a>
-            </p>
+   <!--          <p class="lead">
+              Booked by:
+              {% if object.user %}    
+                 <a href="{% url 'wishlist:user-detail' object.wish_list.user.id%}">{{ object.user }}</a>
+              {% else %}
+                <p class="lead"> Select checkbox below to book </p>
+              {% endif %}
+            </p> -->
             <p class="lead">
               Due date: {{ object.wish_list.due_date }}
             </p>
