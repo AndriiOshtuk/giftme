@@ -28,8 +28,10 @@ SECRET_KEY = os.getenv('GIFTME_SECRET_KEY', 's3cr3t')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DJANGO_DEBUG', False)
 
-ALLOWED_HOSTS = ["*"]
-
+if DEBUG:
+    ALLOWED_HOSTS = ["*"]
+else:
+    ALLOWED_HOSTS = [".herokuapp.com"]
 
 # Application definition
 
@@ -150,7 +152,7 @@ EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-DEFAULT_FROM_EMAIL = 'dev.andrii.oshtuk@gmail.com'
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'dev.andrii.oshtuk@gmail.com')
 
 LOGGING = {
     'version': 1,
