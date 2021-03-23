@@ -2,7 +2,7 @@
 A simple wishlist app build for friends.
 
 ## Overview
-This is a simple app build using Django and hosted on Heroku.
+This is a simple app build using Django and hosted on [Heroku](https://stormy-ocean-26616.herokuapp.com).
 
 ## Features
 :warning: **Work is in progress some features may be missing**
