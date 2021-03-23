@@ -5,6 +5,7 @@ A simple wishlist app build for friends.
 This is a simple app build using Django and hosted on Heroku.
 
 ## Features
+:warning: **Work is in progress some features may be missing**
 * There are models for gift, wishlist and custom user
 * All users could see list of wishlists and gifts   
 * Logged-in users can create own wishlist and gifts
