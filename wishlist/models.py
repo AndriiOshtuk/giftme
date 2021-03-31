@@ -1,4 +1,5 @@
 import datetime
+from urllib.parse import urlparse
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -32,3 +33,7 @@ class Gift(models.Model):
 
     def __str__(self):
         return f"Gift:{self.name} in {self.wish_list}"
+
+    def get_short_url(self):
+        url = urlparse(self.url)
+        return f"{url.netloc}{url.path}"[:50]

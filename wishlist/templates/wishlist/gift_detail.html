@@ -52,7 +52,7 @@
             </p>
             <p class="lead">URL:
               {% if object.url %}
-                <a href="{{ object.url }}">{{ object.url }}</a>
+                <a href="{{ object.url }}">{{ object.get_short_url }}</a>
               {% else %}
                 -
               {% endif %}
