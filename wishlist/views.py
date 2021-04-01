@@ -46,7 +46,9 @@ class GiftDetailView(FormMixin, generic.DetailView):
     def post(self, request, *args, **kwargs):
 
         print(f"POST!!!")
+        print(f"user:{request.user}")
         if not request.user.is_authenticated:
+            print(f"User is not correct")
             return HttpResponseForbidden()
 
         self.object = self.get_object()
@@ -58,6 +60,7 @@ class GiftDetailView(FormMixin, generic.DetailView):
             request.user != self.object.wish_list.user
             and request.user != self.object.user
         ):
+            print(f"No rights")
             return HttpResponseForbidden()
 
         form = self.get_form()
