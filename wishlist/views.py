@@ -48,20 +48,33 @@ class GiftDetailView(FormMixin, generic.DetailView):
         print(f"POST!!!")
         print(f"user:{request.user}")
         if not request.user.is_authenticated:
-            print(f"User is not correct")
+            print(f"User is not authenticated")
             return HttpResponseForbidden()
 
         self.object = self.get_object()
 
-        # TODO 1. Gift owner can modify booking status
-        # TODO 2. Gift borower can modify booking status
-        # TODO 3. If not one of above return error message
-        if (
-            request.user != self.object.wish_list.user
-            and request.user != self.object.user
-        ):
+        # 1. Gift owner can modify booking status
+        # 2. Gift borower can modify booking status
+        # 3. If Gift has not been borrowed yet, any user can book it
+        # 4. If not one of above return error message
+        allow_update = False
+        if request.user == self.object.wish_list.user:
+            allow_update = True
+        elif self.object.user and request.user == self.object.user:
+            allow_update = True
+        elif not self.object.user:
+            allow_update = True
+
+        if not allow_update:
             print(f"No rights")
             return HttpResponseForbidden()
+        # if (
+        #     request.user != self.object.wish_list.user
+        #     and request.user != self.object.user
+        # ):
+        #     print(f"No rights")
+        #     return HttpResponseForbidden()
+
 
         form = self.get_form()
         if form.is_valid():
