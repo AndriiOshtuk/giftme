@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseForbidden
 from django.views import generic
+from django.views.generic.edit import DeleteView
 from django.contrib.auth.models import User
 from django.views.generic.edit import FormMixin
 from django.urls import reverse
+from django.contrib.auth.mixins import UserPassesTestMixin
 
 from wishlist.models import Gift, WishList
 from wishlist.forms import GiftBookedForm
@@ -60,21 +62,17 @@ class GiftDetailView(FormMixin, generic.DetailView):
         allow_update = False
         if request.user == self.object.wish_list.user:
             allow_update = True
+            print(f"1:")
         elif self.object.user and request.user == self.object.user:
             allow_update = True
+            print(f"2:")
         elif not self.object.user:
             allow_update = True
+            print(f"3:")
 
         if not allow_update:
             print(f"No rights")
             return HttpResponseForbidden()
-        # if (
-        #     request.user != self.object.wish_list.user
-        #     and request.user != self.object.user
-        # ):
-        #     print(f"No rights")
-        #     return HttpResponseForbidden()
-
 
         form = self.get_form()
         if form.is_valid():
@@ -97,6 +95,17 @@ class GiftDetailView(FormMixin, generic.DetailView):
         gift.save()
         print(f'BOOKED!!! {form.cleaned_data["is_booked"]}')
         return super().form_valid(form)
+
+
+class GiftDeleteView(UserPassesTestMixin, DeleteView):
+    model = Gift
+
+    def get_success_url(self):
+        return reverse("wishlist:wishlist-detail", kwargs={"pk": self.object.wish_list.pk})
+
+    def test_func(self):
+        """ Only let the user access this page if he owns wishlist """
+        return self.request.user.id == self.get_object().wish_list.user.id
 
 
 def bootstrap(request):
