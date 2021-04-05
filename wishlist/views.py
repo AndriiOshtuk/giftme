@@ -1,11 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseForbidden
+from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirect
 from django.views import generic
 from django.views.generic.edit import DeleteView
 from django.contrib.auth.models import User
 from django.views.generic.edit import FormMixin
 from django.urls import reverse
-from django.contrib.auth.mixins import UserPassesTestMixin
 
 from wishlist.models import Gift, WishList
 from wishlist.forms import GiftBookedForm
@@ -55,6 +54,15 @@ class GiftDetailView(FormMixin, generic.DetailView):
 
         self.object = self.get_object()
 
+        if 'remove_gift' in request.POST:
+            if request.user == self.object.wish_list.user:
+                print(f"0:")
+                url = reverse("wishlist:wishlist-detail", kwargs={"pk": self.object.wish_list.id})
+                self.object.delete()
+                return HttpResponseRedirect(url)
+            else:
+                return HttpResponseForbidden()
+
         # 1. Gift owner can modify booking status
         # 2. Gift borower can modify booking status
         # 3. If Gift has not been borrowed yet, any user can book it
@@ -84,6 +92,7 @@ class GiftDetailView(FormMixin, generic.DetailView):
         gift = Gift.objects.get(id=self.object.pk)
 
         print(f'is_booked!!! {gift.is_booked}:{form.cleaned_data["is_booked"]}')
+        # print(f'remove_gift!!! {gift.is_booked}:{form.cleaned_data["remove_gift"]}')
         is_booked = form.cleaned_data["is_booked"]
         if is_booked:
             gift.is_booked = is_booked
@@ -95,17 +104,6 @@ class GiftDetailView(FormMixin, generic.DetailView):
         gift.save()
         print(f'BOOKED!!! {form.cleaned_data["is_booked"]}')
         return super().form_valid(form)
-
-
-class GiftDeleteView(UserPassesTestMixin, DeleteView):
-    model = Gift
-
-    def get_success_url(self):
-        return reverse("wishlist:wishlist-detail", kwargs={"pk": self.object.wish_list.pk})
-
-    def test_func(self):
-        """ Only let the user access this page if he owns wishlist """
-        return self.request.user.id == self.get_object().wish_list.user.id
 
 
 def bootstrap(request):
