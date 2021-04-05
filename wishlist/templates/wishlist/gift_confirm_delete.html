@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}<title>Giftme - Remove Gift?</title>{% endblock %}
+
+{% block content %}
+
+<h1>Delete Item</h1>
+
+<p>Are you sure you want to delete the author: {{ gift.name }} in {{ gift.wish_list.name }}?</p>
+
+<form action="" method="POST">
+  {% csrf_token %}
+  <input type="submit" class="btn btn-danger mb-2" value="Yes, delete.">
+</form>
+
+<a href="{% url 'wishlist:gift-detail' gift.id%}" class="btn btn-primary" role="button">Cancel</a>
+
+{% endblock %}

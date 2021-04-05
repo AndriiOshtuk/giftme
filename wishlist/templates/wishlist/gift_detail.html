@@ -75,6 +75,12 @@
             {% if object.wish_list.is_due %} disabled {% endif %}
             value="Submit">
             </form>
+            {% if user.id == object.wish_list.user.id %}
+              <form action="{% url 'wishlist:gift-delete' object.id %}">
+              {% csrf_token %}
+              <input type="submit" class="btn btn-danger mb-2" value="Remove" />
+            </form>
+            {% endif %}
             </p>
           </div>
         </div>
