@@ -8,6 +8,7 @@ from .views import (
     UserDetailView,
     bootstrap,
     about,
+    GiftDeleteView,
 )
 
 app_name = "wishlist"
@@ -16,6 +17,7 @@ urlpatterns = [
     path("", UserListView.as_view(), name="user-list"),
     path("<int:pk>", WishListDetailView.as_view(), name="wishlist-detail"),
     path("gift/<int:pk>", GiftDetailView.as_view(), name="gift-detail"),
+    path("gift/<int:pk>/delete/", GiftDeleteView.as_view(), name="gift-delete"),
     path("user/<int:pk>", UserDetailView.as_view(), name="user-detail"),
     path("bootstrap/", bootstrap, name="bootstrap"),
     path("about/", about, name="about-page"),
