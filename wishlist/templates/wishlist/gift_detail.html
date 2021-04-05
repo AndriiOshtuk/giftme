@@ -75,11 +75,10 @@
             {% if object.wish_list.is_due %} disabled {% endif %}
             value="Submit">
             </form>
+            
             {% if user.id == object.wish_list.user.id %}
-              <form action="{% url 'wishlist:gift-delete' object.id %}">
-              {% csrf_token %}
-              <input type="submit" class="btn btn-danger mb-2" value="Remove" />
-            </form>
+              <!-- Button to Open the Modal -->
+              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeGiftModal"> Remove </button>
             {% endif %}
             </p>
           </div>
@@ -88,6 +87,33 @@
     </div>
   </div>
 
-  
+<!-- The Modal -->
+<div class="modal" id="removeGiftModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Remove selected?</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        The gift will be permanently removed.
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <form action="{% url 'wishlist:gift-detail' object.id %}" method="post">
+          {% csrf_token %}
+          <input type="submit" class="btn btn-danger" id="remove_gift" name="remove_gift" value="Remove">
+        </form>
+        <input type="submit" class="btn btn-secondary" data-dismiss="modal" value="Cancel">
+      </div>
+
+    </div>
+  </div>
+</div>
 
 {%endblock%}
