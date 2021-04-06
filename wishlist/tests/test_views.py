@@ -5,6 +5,8 @@ from django.urls import reverse
 
 from wishlist.models import User, WishList, Gift
 
+TEST_URL = "https://www.amazon.com/Mattel-Games-Official-Amazon-Exclusive/dp/B07P6MZPK3/ref=sr_1_4?dchild=1&keywords=card+games&pf_rd_i=21439846011&pf_rd_m=ATVPDKIKX0DER&pf_rd_p=a8bcad66-2a7f-405d-b0e0-8b0e94ebfd3d&pf_rd_r=Z2WAJWNSTY9V4G0CXV18&pf_rd_s=merchandised-search-6&pf_rd_t=101&qid=1614799578&sr=8-4"
+        
 
 class GiftDetailViewTest(TestCase):
     @classmethod
@@ -18,7 +20,7 @@ class GiftDetailViewTest(TestCase):
             name="Gift 1",
             description="Dummy description",
             price=500,
-            url="https://docs.djangoproject.com/",
+            url=TEST_URL,
             wish_list=wishlist1,
             user=user1,
         )
@@ -43,11 +45,17 @@ class GiftDetailViewTest(TestCase):
         self.assertEqual(response.context["gift"].description, "Dummy description")
         self.assertEqual(response.context["gift"].price, 500)
         self.assertEqual(
-            response.context["gift"].url, "https://docs.djangoproject.com/"
+            response.context["gift"].url, TEST_URL
         )
         # TODO test gift.photo
         self.assertEqual(response.context["gift"].wish_list.name, "Gifts for NY")
         self.assertEqual(response.context["gift"].user.username, "testuser1")
+
+    def test_get_short_url(self):
+        response = self.client.get("/wishlist/gift/1")
+        self.assertEqual(
+            response.context["gift"].get_short_url(), TEST_URL[8:58]
+        )
 
 
 class WishListDetailViewTest(TestCase):

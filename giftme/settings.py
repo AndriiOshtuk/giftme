@@ -12,13 +12,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
-import environ
 import dj_database_url
 
-
-
-env = environ.Env(DEBUG=(bool, False))  # set default values and casting
-environ.Env.read_env()                   # reading .env file
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,13 +22,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('GIFTME_SECRET_KEY', cast=str, default='s3cr3t')
+# SECRET_KEY = env('GIFTME_SECRET_KEY', cast=str, default='s3cr3t')
+SECRET_KEY = os.getenv('GIFTME_SECRET_KEY', 's3cr3t')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG', cast=bool, default=False)
+DEBUG = os.getenv('DJANGO_DEBUG', False)
 
-ALLOWED_HOSTS = ["*"]
-
+if DEBUG:
+    ALLOWED_HOSTS = ["*"]
+else:
+    ALLOWED_HOSTS = [".herokuapp.com"]
 
 # Application definition
 
@@ -45,7 +43,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'wishlist.apps.WishlistConfig',
-    'phonenumber_field',
 ]
 
 MIDDLEWARE = [
@@ -155,4 +152,41 @@ EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-DEFAULT_FROM_EMAIL = 'dev.andrii.oshtuk@gmail.com'
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'dev.andrii.oshtuk@gmail.com')
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'console': {
+            'format': '%(name)-12s %(levelname)-8s %(message)s',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'console',
+        },
+        # 'sentry': {
+        #     'level': 'INFO',
+        #     'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
+        # },
+    },
+    # Loggers ####################################################################
+    'loggers': {
+        '': {
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            # 'handlers': ['console', 'sentry'],
+            'handlers': ['console', ],
+        },
+        'django': {
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            # 'handlers': ['console', 'sentry', ],
+            'handlers': ['console', ],
+            # required to avoid double logging with root logger
+            'propagate': False,
+        },
+    },
+}
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

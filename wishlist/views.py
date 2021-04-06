@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseForbidden
+from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirect
 from django.views import generic
+from django.views.generic.edit import DeleteView
 from django.contrib.auth.models import User
 from django.views.generic.edit import FormMixin
 from django.urls import reverse
@@ -31,9 +32,19 @@ class UserDetailView(generic.DetailView):
 class WishListDetailView(generic.DetailView):
     model = WishList
 
+    def post(self, request, *args, **kwargs):
+        print(f"\nWishListDetailView.post()")
 
-# class GiftDetailView(generic.DetailView):
-#     model = Gift
+        self.object = self.get_object()
+
+        if request.user == self.object.user:
+            if 'remove_wishlist' in request.POST:
+                print(f"Removing wishlist")
+                url = reverse("wishlist:user-detail", kwargs={"pk": self.object.user.id})
+                self.object.delete()
+                return HttpResponseRedirect(url)
+        else:
+            return HttpResponseForbidden()
 
 
 class GiftDetailView(FormMixin, generic.DetailView):
@@ -46,18 +57,39 @@ class GiftDetailView(FormMixin, generic.DetailView):
     def post(self, request, *args, **kwargs):
 
         print(f"POST!!!")
+        print(f"user:{request.user}")
         if not request.user.is_authenticated:
+            print(f"User is not authenticated")
             return HttpResponseForbidden()
 
         self.object = self.get_object()
 
-        # TODO 1. Gift owner can modify booking status
-        # TODO 2. Gift borower can modify booking status
-        # TODO 3. If not one of above return error message
-        if (
-            request.user != self.object.wish_list.user
-            and request.user != self.object.user
-        ):
+        if 'remove_gift' in request.POST:
+            if request.user == self.object.wish_list.user:
+                print(f"0:")
+                url = reverse("wishlist:wishlist-detail", kwargs={"pk": self.object.wish_list.id})
+                self.object.delete()
+                return HttpResponseRedirect(url)
+            else:
+                return HttpResponseForbidden()
+
+        # 1. Gift owner can modify booking status
+        # 2. Gift borower can modify booking status
+        # 3. If Gift has not been borrowed yet, any user can book it
+        # 4. If not one of above return error message
+        allow_update = False
+        if request.user == self.object.wish_list.user:
+            allow_update = True
+            print(f"1:")
+        elif self.object.user and request.user == self.object.user:
+            allow_update = True
+            print(f"2:")
+        elif not self.object.user:
+            allow_update = True
+            print(f"3:")
+
+        if not allow_update:
+            print(f"No rights")
             return HttpResponseForbidden()
 
         form = self.get_form()
@@ -70,6 +102,7 @@ class GiftDetailView(FormMixin, generic.DetailView):
         gift = Gift.objects.get(id=self.object.pk)
 
         print(f'is_booked!!! {gift.is_booked}:{form.cleaned_data["is_booked"]}')
+        # print(f'remove_gift!!! {gift.is_booked}:{form.cleaned_data["remove_gift"]}')
         is_booked = form.cleaned_data["is_booked"]
         if is_booked:
             gift.is_booked = is_booked

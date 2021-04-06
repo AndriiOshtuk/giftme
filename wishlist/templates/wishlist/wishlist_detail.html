@@ -30,11 +30,45 @@
                 <li><p><i class="fas fa-gift text-muted mx-2"></i><a href="{% url 'wishlist:gift-detail' item.id %}">{{ item.name }}</a></p></li>
             {% endfor %}
         </ul>
+
+        {% if user.id == object.user.id %}
+          <!-- Button to Open the Modal -->
+          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeWishlistModal"> Remove wishlist </button>
+        {% endif %}
       </div>
       <!-- Text column end-->
 
     </div>
     
   </div>
+
+<!-- The Modal -->
+<div class="modal" id="removeWishlistModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Remove selected?</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        The wishlist and all associated gifts will be permanently removed.
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <form action="{% url 'wishlist:wishlist-detail' object.id %}" method="post">
+          {% csrf_token %}
+          <input type="submit" class="btn btn-danger" id="remove_wishlist" name="remove_wishlist" value="Remove">
+        </form>
+        <input type="submit" class="btn btn-secondary" data-dismiss="modal" value="Cancel">
+      </div>
+
+    </div>
+  </div>
+</div>
 
 {%endblock%}
