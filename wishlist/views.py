@@ -32,9 +32,19 @@ class UserDetailView(generic.DetailView):
 class WishListDetailView(generic.DetailView):
     model = WishList
 
+    def post(self, request, *args, **kwargs):
+        print(f"\nWishListDetailView.post()")
 
-# class GiftDetailView(generic.DetailView):
-#     model = Gift
+        self.object = self.get_object()
+
+        if request.user == self.object.user:
+            if 'remove_wishlist' in request.POST:
+                print(f"Removing wishlist")
+                url = reverse("wishlist:user-detail", kwargs={"pk": self.object.user.id})
+                self.object.delete()
+                return HttpResponseRedirect(url)
+        else:
+            return HttpResponseForbidden()
 
 
 class GiftDetailView(FormMixin, generic.DetailView):
