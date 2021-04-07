@@ -1,7 +1,9 @@
+import logging
+
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirect
 from django.views import generic
-from django.views.generic.edit import DeleteView
+from django.views.generic.edit import CreateView
 from django.contrib.auth.models import User
 from django.views.generic.edit import FormMixin
 from django.urls import reverse
@@ -9,7 +11,8 @@ from django.urls import reverse
 from wishlist.models import Gift, WishList
 from wishlist.forms import GiftBookedForm
 
-# Create your views here.
+
+logger = logging.getLogger(__name__)
 
 
 class UserListView(generic.ListView):
@@ -33,18 +36,30 @@ class WishListDetailView(generic.DetailView):
     model = WishList
 
     def post(self, request, *args, **kwargs):
-        print(f"\nWishListDetailView.post()")
-
         self.object = self.get_object()
+
+        logger.debug(f"User:{request.user} post action for {self.object.id}")
 
         if request.user == self.object.user:
             if 'remove_wishlist' in request.POST:
-                print(f"Removing wishlist")
+                logger.info(f"User:{request.user} removes wishlist:{self.object.id}")
                 url = reverse("wishlist:user-detail", kwargs={"pk": self.object.user.id})
                 self.object.delete()
                 return HttpResponseRedirect(url)
         else:
             return HttpResponseForbidden()
+
+
+class WishListCreate(CreateView):
+    model = WishList
+    fields = ['name', 'due_date']
+
+    def get_form_kwargs(self, *args, **kwargs):
+        kwargs = super(WishListCreate, self).get_form_kwargs(*args, **kwargs)
+        if kwargs['instance'] is None:
+            kwargs['instance'] = WishList()
+        kwargs['instance'].user = self.request.user
+        return kwargs
 
 
 class GiftDetailView(FormMixin, generic.DetailView):
@@ -55,22 +70,22 @@ class GiftDetailView(FormMixin, generic.DetailView):
         return reverse("wishlist:gift-detail", kwargs={"pk": self.object.pk})
 
     def post(self, request, *args, **kwargs):
-
-        print(f"POST!!!")
-        print(f"user:{request.user}")
         if not request.user.is_authenticated:
-            print(f"User is not authenticated")
+            logger.debug(f"User:{request.user} is not authenticated")
             return HttpResponseForbidden()
 
         self.object = self.get_object()
 
+        logger.debug(f"User:{request.user} post action for {self.object}")
+
         if 'remove_gift' in request.POST:
             if request.user == self.object.wish_list.user:
-                print(f"0:")
+                logger.info(f"User:{request.user} removes gift {self.object}")
                 url = reverse("wishlist:wishlist-detail", kwargs={"pk": self.object.wish_list.id})
                 self.object.delete()
                 return HttpResponseRedirect(url)
             else:
+                logger.debug(f"Access forbidden for user:{request.user}")
                 return HttpResponseForbidden()
 
         # 1. Gift owner can modify booking status
@@ -80,16 +95,16 @@ class GiftDetailView(FormMixin, generic.DetailView):
         allow_update = False
         if request.user == self.object.wish_list.user:
             allow_update = True
-            print(f"1:")
+            logger.debug(f"OK, Wishlist ownership check for user:{request.user}")
         elif self.object.user and request.user == self.object.user:
             allow_update = True
-            print(f"2:")
+            logger.debug(f"OK, Borrower status check for user:{request.user}")
         elif not self.object.user:
             allow_update = True
-            print(f"3:")
+            logger.debug(f"OK, empty borrower check for user:{request.user}")
 
         if not allow_update:
-            print(f"No rights")
+            logger.info(f"User:{request.user} has no rights to edit borrow status for {self.object}")
             return HttpResponseForbidden()
 
         form = self.get_form()
@@ -101,8 +116,6 @@ class GiftDetailView(FormMixin, generic.DetailView):
     def form_valid(self, form, request):
         gift = Gift.objects.get(id=self.object.pk)
 
-        print(f'is_booked!!! {gift.is_booked}:{form.cleaned_data["is_booked"]}')
-        # print(f'remove_gift!!! {gift.is_booked}:{form.cleaned_data["remove_gift"]}')
         is_booked = form.cleaned_data["is_booked"]
         if is_booked:
             gift.is_booked = is_booked
@@ -112,7 +125,7 @@ class GiftDetailView(FormMixin, generic.DetailView):
             gift.user = None
 
         gift.save()
-        print(f'BOOKED!!! {form.cleaned_data["is_booked"]}')
+        logger.info(f"User:{request.user} updated booked status to {is_booked} for {gift}")
         return super().form_valid(form)
 
 
